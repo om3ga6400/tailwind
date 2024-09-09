@@ -1,2 +1,5 @@
-# om3ga6400.github.io
-My cool website 
+# Problems
+
+text underlined on commit cards in updates
+
+deployment status no fully aligned to left
