@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <title>Om3ga</title>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <header>
+        <div class="header-links">
+            <a href="updates.html">Updates</a>
+            <a href="about.html">About Me</a>
+        </div>
+        <h1>My GitHub Repositories</h1>
+    </header>
+
+    <div class="repo-container" id="repo-container">
+        <!-- Repository cards will be injected here -->
+    </div>
+
+    <script src="js/particles.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const username = 'om3ga6400';
+            const container = document.getElementById('repo-container');
+            fetch(`https://api.github.com/users/${username}/repos`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach((repo, index) => {
+                        const repoCard = document.createElement('div');
+                        repoCard.classList.add('repo-card');
+
+                        // Assign language colors
+                        const languageColor = {
+                            'JavaScript': '#f1e05a',
+                            'HTML': '#e34c26',
+                            'CSS': '#ff69b4'
+                        }[repo.language] || '#c9d1d9';
+
+                        // Wrap content in an anchor tag to make the whole card clickable
+                        repoCard.innerHTML = `
+                            <a href="${repo.html_url}" target="_blank" style="text-decoration: none; color: inherit;">
+                                <h3>
+                                    ${repo.name}
+                                    <span class="repo-status ${repo.archived ? 'archive' : ''}">
+                                        ${repo.archived ? 'Public archive' : 'Public'}
+                                    </span>
+                                </h3>
+                                <p class="repo-description">${repo.description || 'No description available'}</p>
+                                <div class="repo-info">
+                                    <span class="repo-language">
+                                        <span class="language-color" style="background-color: ${languageColor};"></span>
+                                        ${repo.language || 'N/A'}
+                                    </span>
+                                    <span><i class="fa-solid fa-code-fork"></i> ${repo.forks_count}</span>
+                                    <span><i class="fa-solid fa-star"></i> ${repo.stargazers_count}</span>
+                                </div>
+                            </a>
+                        `;
+
+                        // Add animation delay to stagger the appearance of cards
+                        repoCard.style.animationDelay = `${Math.floor(index / 2) * 200}ms`;
+
+                        // Append the repository card to the container
+                        container.appendChild(repoCard);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching repositories:', error);
+                    container.innerHTML = '<p>Error loading repositories.</p>';
+                });
+        });
+    </script>
+    <script type="text/javascript" src="js/particles.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+</body>
+</html>
