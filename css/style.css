@@ -194,7 +194,16 @@ header {
     width: 90%;
     display: flex;
     align-items: flex-start;
-    padding-bottom: 40px; /* Add padding to make room for the status */
+    padding-bottom: 40px;
+    text-decoration: none;
+}
+
+.commit-entry a,
+.commit-entry h3,
+.commit-entry .commit-description,
+.commit-entry .commit-date {
+    text-decoration: none;
+    color: inherit;
 }
 
 /* Commit Status */
