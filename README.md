@@ -1,5 +1,5 @@
 # Problems
 
-text underlined on commit cards in updates
+deployment status not fully aligned to left
 
-deployment status no fully aligned to left
+commit cards not animated (hover and boot up)
