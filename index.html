@@ -1,83 +1,129 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="build.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
     <title>Om3ga</title>
-</head>
-<body>
-    <div id="particles-js"></div>
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback" defer></script>
-    <header>
-        <div class="header-links">
-            <a href="updates.html">Updates</a>
-            <a href="about.html">About Me</a>
-        </div>
-        <h1>My GitHub Repositories</h1>
+  </head>
+  <body
+    class="min-h-screen m-0 text-github-text font-sans flex flex-col bg-github-dark"
+  >
+    <div id="particles-js" class="fixed inset-0 z-[-10] bg-github-dark"></div>
+    <script
+      src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback"
+      defer
+    ></script>
+    <header
+      class="relative p-5 text-center bg-opacity-85 bg-github-card border-b border-github-border animate-slideInFromTop z-10"
+    >
+      <div class="absolute top-5 right-5 z-11">
+        <a
+          href="/updates"
+          class="text-github-link no-underline ml-4 text-base transition-colors duration-300 ease-in-out hover:text-github-text"
+          >Updates</a
+        >
+        <a
+          href="/about"
+          class="text-github-link no-underline ml-4 text-base transition-colors duration-300 ease-in-out hover:text-github-text"
+          >About Me</a
+        >
+      </div>
+      <h1 class="text-2xl font-bold">My GitHub Repositories</h1>
     </header>
 
-    <div class="repo-container" id="repo-container">
-        <!-- Repository cards will be injected here -->
+    <div
+      id="repo-container"
+      class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-5xl mx-auto p-5 flex-1"
+    >
+      <!-- Repository cards will be injected here -->
     </div>
 
     <script src="js/particles.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const username = 'om3ga6400';
-            const container = document.getElementById('repo-container');
-            fetch(`https://api.github.com/users/${username}/repos`)
-                .then(response => response.json())
-                .then(data => {
-                    data.forEach((repo, index) => {
-                        const repoCard = document.createElement('div');
-                        repoCard.classList.add('repo-card');
+      document.addEventListener('DOMContentLoaded', () => {
+        const username = 'om3ga6400'
+        const container = document.getElementById('repo-container')
+        fetch(`https://api.github.com/users/${username}/repos`)
+          .then((response) => response.json())
+          .then((data) => {
+            data.forEach((repo, index) => {
+              const repoCard = document.createElement('div')
+              repoCard.classList.add(
+                'bg-github-card',
+                'border',
+                'border-github-border',
+                'rounded-md',
+                'p-4',
+                'text-left',
+                'transition-all',
+                'duration-300',
+                'ease-in-out',
+                'opacity-0',
+                'transform',
+                'translate-y-5',
+                'animate-fadeInUp',
+                'hover:translate-y-[-20px]',
+                'hover:bg-github-card-hover'
+              )
 
-                        // Assign language colors
-                        const languageColor = {
-                            'JavaScript': '#f1e05a',
-                            'HTML': '#e34c26',
-                            'CSS': '#ff69b4'
-                        }[repo.language] || '#c9d1d9';
+              // Assign language colors
+              const languageColor =
+                {
+                  JavaScript: '#f1e05a',
+                  HTML: '#e34c26',
+                  CSS: '#ff69b4',
+                }[repo.language] || '#c9d1d9'
 
-                        // Wrap content in an anchor tag to make the whole card clickable
-                        repoCard.innerHTML = `
-                            <a href="${repo.html_url}" target="_blank" style="text-decoration: none; color: inherit;">
-                                <h3>
+              // Wrap content in an anchor tag to make the whole card clickable
+              repoCard.innerHTML = `
+                            <a href="${repo.html_url}" target="_blank" class="block text-inherit no-underline font-semibold">
+                                <h3 class="m-0 text-lg text-github-link flex items-center">
                                     ${repo.name}
-                                    <span class="repo-status ${repo.archived ? 'archive' : ''}">
+                                    <span class="bg-transparent text-github-text px-2 py-1 border border-github-border rounded-full text-xs inline-flex items-center ml-3 ${repo.archived ? 'text-yellow-400 border-yellow-400' : ''}">
                                         ${repo.archived ? 'Public archive' : 'Public'}
                                     </span>
                                 </h3>
-                                <p class="repo-description">${repo.description || 'No description available'}</p>
-                                <div class="repo-info">
-                                    <span class="repo-language">
-                                        <span class="language-color" style="background-color: ${languageColor};"></span>
+                                <p class="text-github-secondary text-sm my-2">${repo.description || 'No description available'}</p>
+                                <div class="flex gap-4 items-center mt-3 flex-wrap">
+                                    <span class="text-github-secondary text-sm flex items-center">
+                                        <span class="w-3 h-3 rounded-full inline-block mr-1" style="background-color: ${languageColor};"></span>
                                         ${repo.language || 'N/A'}
                                     </span>
-                                    <span><i class="fa-solid fa-code-fork"></i> ${repo.forks_count}</span>
-                                    <span><i class="fa-solid fa-star"></i> ${repo.stargazers_count}</span>
+                                    <span class="text-github-secondary text-sm flex items-center">
+                                        <i class="fa-solid fa-code-fork mr-1"></i> ${repo.forks_count}
+                                    </span>
+                                    <span class="text-github-secondary text-sm flex items-center">
+                                        <i class="fa-solid fa-star mr-1"></i> ${repo.stargazers_count}
+                                    </span>
                                 </div>
-                            </a>`;
+                            </a>`
 
-                        // Add animation delay to stagger the appearance of cards
-                        repoCard.style.animationDelay = `${Math.floor(index / 2) * 200}ms`;
+              // Add animation delay to stagger the appearance of cards
+              repoCard.style.animationDelay = `${Math.floor(index / 2) * 200}ms`
 
-                        // Append the repository card to the container
-                        container.appendChild(repoCard);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching repositories:', error);
-                    container.innerHTML = '<p>Error loading repositories.</p>';
-                });
-        });
+              // Append the repository card to the container
+              container.appendChild(repoCard)
+            })
+          })
+          .catch((error) => {
+            console.error('Error fetching repositories:', error)
+            container.innerHTML = '<p>Error loading repositories.</p>'
+          })
+      })
     </script>
     <script type="text/javascript" src="js/particles.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
     <!-- Cloudflare Web Analytics -->
-    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d8a37535a84449fa0c64c41bd89449c"}'></script>
+    <script
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon='{"token": "0d8a37535a84449fa0c64c41bd89449c"}'
+    ></script>
     <!-- End Cloudflare Web Analytics -->
-</body>
+  </body>
 </html>
